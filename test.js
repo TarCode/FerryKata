@@ -2,23 +2,6 @@ var assert = require("assert");
 var Car = require('./Car');
 var Ferry = require('./Ferry');
 
-var fakeCar = {color: "red", passengers: 2, trip_count: 0};
-var fakeCar2 = {color: "yellow", passengers: 2, trip_count: 0};
-
-var fakeFerry  = { cars_allowed: 2,
-                  people_allowed: 8,
-                  people_count: 2,
-                  car_count: 1,
-                  board: "Accepted",
-                  notBoard: "Rejected",
-                  unBoard: "Unboarded Ferry",
-                  car_colors : {red : 1, yellow : 1}
-                };
-
-
-
-
-
 describe('Car Class', function(){
     var car = new Car("red", 2);
     var fakeCar = {color: "red", passengers: 2, trip_count: 0};
@@ -29,64 +12,86 @@ describe('Car Class', function(){
 });
 
 describe('Ferry Class', function(){
-    var ferry = new Ferry(2, 8);
-    var boarded = ferry.board(fakeCar);
 
     it('should create new ferry instance', function (done) {
-      assert.deepEqual(fakeFerry.cars_allowed, ferry.cars_allowed);
-      assert.deepEqual(fakeFerry.people_allowed, ferry.people_allowed);
+      var ferry = new Ferry(2, 8);
+      assert.deepEqual(ferry.cars_allowed, 2);
+      assert.deepEqual(ferry.people_allowed, 8);
       done();
     });
 
     it('should return accepted if car boards ferry', function (done) {
-      assert.equal(fakeFerry.board, boarded);
+      var ferry = new Ferry(1, 1);
+      var car = new Car("red", 1);
+      assert.equal(ferry.board(car), "Accepted");
       done();
     });
 
     it('should update car trip_count', function (done) {
-      assert.equal(fakeFerry.board, boarded);
+      var ferry = new Ferry(1, 1);
+      var car = new Car("red", 1);
+      ferry.board(car);
+      assert.equal(car.trip_count, 1);
       done();
     });
 
     it('should update people_count in ferry instance', function (done) {
-      assert.deepEqual(fakeFerry.people_count, ferry.people_count);
+      var ferry = new Ferry(1, 1);
+      var car = new Car("red", 1);
+      ferry.board(car);
+      assert.deepEqual(ferry.people_count, 1);
       done();
     });
 
     it('should update car_count in ferry instance', function (done) {
-      assert.deepEqual(fakeFerry.car_count, ferry.car_count);
+      var ferry = new Ferry(1, 1);
+      var car = new Car("red", 1);
+      ferry.board(car);
+      assert.deepEqual(ferry.car_count, 1);
       done();
     });
 
     it('should update car colors when car boards a ferry', function (done) {
-      var boarded = ferry.board(fakeCar2);
-      assert.deepEqual(ferry.car_colors, fakeFerry.car_colors);
+      var ferry = new Ferry(1, 1);
+      var car = new Car("red", 1);
+      ferry.board(car);
+      assert.deepEqual(ferry.car_colors, {"red":1});
       done();
     });
 
-    it('should return rejected if ferry is full', function (done) {
-      var boarded = ferry.board(fakeCar2);
-      var boarded = ferry.board(fakeCar);
-      assert.equal(boarded, fakeFerry.notBoard);
+    it('should return rejected if ferry reached maximum cars', function (done) {
+      var ferry = new Ferry(0, 1);
+      var car = new Car("red", 1);
+      assert.equal(ferry.board(car), "Rejected");
       done();
     });
 
 
     it('should unboard a ferry', function (done) {
-      var unBoarded = ferry.unBoard(fakeCar);
-      assert.equal(unBoarded, fakeFerry.unBoard);
+      var ferry = new Ferry(1, 1);
+      var car = new Car("red", 1);
+      ferry.board(car);
+      assert.equal(ferry.unBoard(car),"Unboarded Ferry");
       done();
     });
 
     it('should update car_count when car unboards a ferry', function (done) {
-      var unBoarded = ferry.unBoard(fakeCar);
-      assert.equal(ferry.car_count, fakeFerry.car_count );
+      var ferry = new Ferry(1, 1);
+      var car = new Car("red", 1);
+      ferry.board(car);
+      assert.equal(ferry.car_count, 1);
+      ferry.unBoard(car)
+      assert.equal(ferry.car_count, 0);
       done();
     });
 
     it('should update people_count when car unboards a ferry', function (done) {
-      var unBoarded = ferry.unBoard(fakeCar);
-      assert.equal(ferry.people_count, fakeFerry.people_count);
+      var ferry = new Ferry(1, 1);
+      var car = new Car("red", 1);
+      ferry.board(car);
+      assert.equal(ferry.people_count, 1);
+      ferry.unBoard(car)
+      assert.equal(ferry.people_count, 0);
       done();
     });
 

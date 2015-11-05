@@ -24,7 +24,7 @@ function Ferry(cars_allowed, people_allowed){
     }
 
     this.unBoard = function(car){
-        if(this.car_count >= 1 && this.people_count > car.passengers){
+        if(this.car_count > 0 && this.people_count > 0){
           this.car_count--;
           this.people_count = this.people_count - car.passengers;
           return "Unboarded Ferry";
