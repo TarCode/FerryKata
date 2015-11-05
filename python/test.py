@@ -37,5 +37,11 @@ class TestFerry(unittest.TestCase):
         ferry.board(car)
         self.assertEqual(ferry.car_count, 1)
 
+    def test_peopleCount(self):
+        car = Car("red",4)
+        ferry = Ferry(3,4)
+        ferry.board(car)
+        self.assertEqual(ferry.people_count, 4)    
+
 if __name__ == '__main__':
     unittest.main()

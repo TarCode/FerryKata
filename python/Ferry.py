@@ -8,7 +8,7 @@ class Ferry(object):
     def board(self, car):
             if self.cars_allowed >= 1 and self.people_allowed >= car.passengers:
                 self.car_count = self.car_count + 1
-                self.people_allowed = self.people_allowed + car.passengers
+                self.people_count = self.people_count + car.passengers
                 return "Accepted"
             else:
                 return "Rejected"
