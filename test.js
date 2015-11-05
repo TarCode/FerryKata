@@ -95,6 +95,28 @@ describe('Ferry Class', function(){
       done();
     });
 
+    it('should return half price for every 3 trips on a ferry', function (done) {
+      var ferry = new Ferry(1, 1);
+      var car = new Car("red", 1);
+      ferry.board(car);
+      ferry.unBoard(car);
+      ferry.board(car);
+      ferry.unBoard(car);
+      assert.deepEqual(ferry.board(car), "Half Price");
+      done();
+    });
+
+    it('should return \"You go free!\" for every 7 trips on a ferry', function (done) {
+      var ferry = new Ferry(1, 1);
+      var car = new Car("red", 1);
+      for(var x = 0; x < 6; x++){
+        ferry.board(car);
+        ferry.unBoard(car);
+      }
+
+      assert.deepEqual(ferry.board(car), "You go free!");
+      done();
+    });
 
 
 

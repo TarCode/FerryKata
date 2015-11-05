@@ -16,6 +16,12 @@ function Ferry(cars_allowed, people_allowed){
         this.car_count++;
         this.people_count = this.people_count + car.passengers;
         car.trip_count += 1;
+        if(car.trip_count !== 0 && car.trip_count === 3){
+          return "Half Price";
+        }
+        else if(car.trip_count !== 0 && car.trip_count === 7){
+          return "You go free!";
+        }
         return "Accepted";
       }
       else{
